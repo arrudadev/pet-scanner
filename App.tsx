@@ -1,22 +1,42 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { StatusBar } from 'expo-status-bar';
+import { Camera } from 'expo-camera';
+
+import * as tf from '@tensorflow/tfjs';
+import '@tensorflow/tfjs-react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+
+  camera: {
+    flex: 1,
   },
 });
 
 export default function App() {
+  const [hasPermission, setHasPermission] = useState(false);
+  const [isTfReady, setIsTfReady] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === 'granted');
+
+      await tf.ready();
+      setIsTfReady(true);
+    })();
+  }, []);
+
+  if (hasPermission === false || isTfReady === false) {
+    return <View />;
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar />
+      <Camera style={styles.camera} type={Camera.Constants.Type.back} />
     </View>
   );
 }
