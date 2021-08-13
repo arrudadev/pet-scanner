@@ -1,42 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
 
-import { Camera } from 'expo-camera';
+import AppLoading from 'expo-app-loading';
 
-import * as tf from '@tensorflow/tfjs';
-import '@tensorflow/tfjs-react-native';
+import {
+  useFonts,
+  Jost_400Regular,
+  Jost_600SemiBold,
+} from '@expo-google-fonts/jost';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  camera: {
-    flex: 1,
-  },
-});
+import { Home } from './src/pages/Home';
 
 export default function App() {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [isTfReady, setIsTfReady] = useState(false);
+  const [fontsLoaded] = useFonts({
+    Jost_400Regular,
+    Jost_600SemiBold,
+  });
 
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+  if (!fontsLoaded) return <AppLoading />;
 
-      await tf.ready();
-      setIsTfReady(true);
-    })();
-  }, []);
-
-  if (hasPermission === false || isTfReady === false) {
-    return <View />;
-  }
-
-  return (
-    <View style={styles.container}>
-      <Camera style={styles.camera} type={Camera.Constants.Type.back} />
-    </View>
-  );
+  return <Home />;
 }
