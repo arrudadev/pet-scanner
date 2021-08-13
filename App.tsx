@@ -8,6 +8,7 @@ import {
   Jost_600SemiBold,
 } from '@expo-google-fonts/jost';
 
+import { PetContextProvider } from './src/contexts/PetContext';
 import { Home } from './src/pages/Home';
 
 export default function App() {
@@ -18,5 +19,9 @@ export default function App() {
 
   if (!fontsLoaded) return <AppLoading />;
 
-  return <Home />;
+  return (
+    <PetContextProvider>
+      <Home />
+    </PetContextProvider>
+  );
 }
