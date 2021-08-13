@@ -3,10 +3,14 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { Camera as ExpoCamera } from 'expo-camera';
 
+import { useCamera } from '../../hooks/useCamera';
+
 export function Camera() {
   let cameraRef: ExpoCamera | null = null;
 
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
+
+  const { setImageUri, setIsCameraOpen } = useCamera();
 
   useEffect(() => {
     (async () => {
@@ -17,8 +21,9 @@ export function Camera() {
 
   async function handleTakePicture() {
     if (cameraRef) {
-      const { uri, width, height } = await cameraRef?.takePictureAsync();
-      console.log(uri, width, height);
+      const { uri } = await cameraRef?.takePictureAsync();
+      setImageUri(uri);
+      setIsCameraOpen(false);
     }
   }
 
