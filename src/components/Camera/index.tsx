@@ -3,6 +3,8 @@ import { TouchableOpacity, View } from 'react-native';
 
 import { Camera as ExpoCamera } from 'expo-camera';
 
+import { useNavigation, CommonActions } from '@react-navigation/native';
+
 import { useCamera } from '../../hooks/useCamera';
 
 export function Camera() {
@@ -11,6 +13,8 @@ export function Camera() {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
 
   const { setImageUri, setIsCameraOpen } = useCamera();
+
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -24,6 +28,8 @@ export function Camera() {
       const { uri } = await cameraRef?.takePictureAsync();
       setImageUri(uri);
       setIsCameraOpen(false);
+
+      navigation.dispatch(CommonActions.navigate({ name: 'ScannerData' }));
     }
   }
 

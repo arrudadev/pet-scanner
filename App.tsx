@@ -13,8 +13,7 @@ import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-react-native';
 
 import { CameraContextProvider } from './src/contexts/CameraContext';
-import { Home } from './src/pages/Home';
-import { ScannerData } from './src/pages/ScannerData';
+import { Routes } from './src/routes';
 
 export default function App() {
   const [isTfReady, setIsTfReady] = useState(false);
@@ -39,8 +38,7 @@ export default function App() {
 
   return (
     <CameraContextProvider>
-      {/* <Home /> */}
-      <ScannerData />
+      <Routes />
     </CameraContextProvider>
   );
 }

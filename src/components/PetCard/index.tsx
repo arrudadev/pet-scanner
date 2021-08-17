@@ -28,7 +28,9 @@ export function PetCard({ title, percentage }: PetCardProps) {
       )}
     >
       <RectButton style={styles.container}>
-        <Text style={styles.title}>{title}</Text>
+        <Text ellipsizeMode="tail" numberOfLines={1} style={styles.title}>
+          {title}
+        </Text>
 
         <View style={styles.details}>
           <Text style={styles.time}>{percentage}</Text>

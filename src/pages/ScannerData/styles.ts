@@ -6,15 +6,20 @@ import fonts from '../../styles/fonts';
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
+
     paddingHorizontal: 30,
     paddingTop: 20,
+    paddingBottom: 20,
+
     backgroundColor: colors.background,
   },
 
   image: {
     height: Dimensions.get('window').width * 0.5,
+    width: '100%',
   },
 
   pets: {
